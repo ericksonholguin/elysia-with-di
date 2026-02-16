@@ -11,10 +11,17 @@ export const usersHttpRoutes = new Elysia({ prefix: "/users" })
     async ({ body }) => {
       const handler = container.resolve(CreateUserHandler);
 
-      return await handler.execute({
+      const response = await handler.execute({
         type: "users.create",
         payload: body,
       });
+
+      return {
+        message: "User created successfully",
+        data: response,
+        error: null,
+        timestamp: new Date().toISOString(),
+      };
     },
     {
       body: createUserBodySchema,
@@ -23,8 +30,15 @@ export const usersHttpRoutes = new Elysia({ prefix: "/users" })
   .get("/:id", async ({ params }) => {
     const handler = container.resolve(GetUserByIdHandler);
 
-    return await handler.execute({
+    const response = await handler.execute({
       type: "users.getById",
       payload: { id: params.id },
     });
+
+    return {
+      message: "User fetched successfully",
+      data: response,
+      error: null,
+      timestamp: new Date().toISOString(),
+    };
   });
