@@ -1,11 +1,12 @@
-import Elysia from "elysia";
+import { Elysia } from "elysia";
+import { usersHttpRoutes } from "../../../modules/users/presentation/http/users.http.routes";
 
 export const createHttpServer = () => {
   const app = new Elysia();
 
-  console.info("HTTP server created");
-
   app.get("/health", () => ({ ok: true }));
+
+  app.use(usersHttpRoutes);
 
   return app;
 };

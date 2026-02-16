@@ -1,6 +1,6 @@
+import type { MongoDatasource } from "../datasources/mongodb/mongodb.types";
 import { container } from "./container";
 import { TOKENS } from "./tokens";
-import type { MongoDatasource } from "../datasources/mongodb/mongodb.types";
 
 export const registerSharedDependencies = (deps: {
   mongo: MongoDatasource;

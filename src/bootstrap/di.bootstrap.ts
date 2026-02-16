@@ -1,6 +1,8 @@
-import type { MongoConnection } from "../shared/infrastructure/database/mongodb/mongodb.connection";
+import type { MongoDatasource } from "../shared/infrastructure/datasources/mongodb/mongodb.types";
 import { registerSharedDependencies } from "../shared/infrastructure/di/register";
+import { registerModules } from "../modules/modules.register";
 
-export const bootstrapDI = async (deps: { mongo: MongoConnection }) => {
+export const bootstrapDI = async (deps: { mongo: MongoDatasource }) => {
   registerSharedDependencies(deps);
+  registerModules();
 };
