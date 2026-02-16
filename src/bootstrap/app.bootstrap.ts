@@ -15,4 +15,6 @@ export const bootstrapApp = async () => {
   const app = createHttpServer();
 
   await bootstrapHttp(app);
+
+  return app;
 };
