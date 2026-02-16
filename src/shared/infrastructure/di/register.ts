@@ -1,9 +1,9 @@
-import type { MongoConnection } from "../database/mongodb/mongodb.connection";
 import { container } from "./container";
 import { TOKENS } from "./tokens";
+import type { MongoDatasource } from "../datasources/mongodb/mongodb.types";
 
 export const registerSharedDependencies = (deps: {
-  mongo: MongoConnection;
+  mongo: MongoDatasource;
 }) => {
-  container.register(TOKENS.MongoConnection, { useValue: deps.mongo });
+  container.register(TOKENS.MongoDatasource, { useValue: deps.mongo });
 };
