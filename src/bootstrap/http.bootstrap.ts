@@ -1,4 +1,4 @@
-import type Elysia from "elysia";
+import type { Elysia } from "elysia";
 import { env } from "../config/env";
 
 export const bootstrapHttp = async (app: Elysia) => {
