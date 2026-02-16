@@ -1,43 +1,35 @@
 import { injectable, inject } from "tsyringe";
-import { ObjectId } from "mongodb";
+
+import { UsersModel } from "./users.mongoose.schema";
 import type { UsersRepository } from "../../../domain/repositories/users.repository";
-import type { MongoDatasource } from "../../../../../shared/infrastructure/datasources/mongodb/mongodb.types";
+import type { MongooseDatasource } from "../../../../../shared/infrastructure/datasources/mongodb/mongoose.datasource";
 import { TOKENS } from "../../../../../shared/infrastructure/di/tokens";
-import { User } from "../../../domain/entities/user.entity";
+import type { User } from "../../../domain/entities/user.entity";
 
 @injectable()
 export class MongoUsersRepository implements UsersRepository {
   constructor(
-    @inject(TOKENS.MongoDatasource)
-    private readonly mongo: MongoDatasource
+    @inject(TOKENS.MongooseDatasource)
+    private readonly mongoose: MongooseDatasource
   ) {}
 
-  private collection() {
-    return this.mongo.db.collection("users");
-  }
-
   async create(input: { email: string; name: string }): Promise<User> {
-    const now = new Date();
-
-    const doc = {
+    const created = await UsersModel.create({
       email: input.email,
       name: input.name,
-      createdAt: now,
-      updatedAt: now,
-    };
-
-    const result = await this.collection().insertOne(doc);
+    });
 
     return {
-      id: result.insertedId.toString(),
-      ...doc,
+      id: created._id.toString(),
+      email: created.email,
+      name: created.name,
+      createdAt: created.createdAt,
+      updatedAt: created.updatedAt,
     };
   }
 
   async findById(id: string): Promise<User | null> {
-    if (!ObjectId.isValid(id)) return null;
-
-    const doc = await this.collection().findOne({ _id: new ObjectId(id) });
+    const doc = await UsersModel.findById(id);
 
     if (!doc) return null;
 
@@ -51,7 +43,7 @@ export class MongoUsersRepository implements UsersRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const doc = await this.collection().findOne({ email });
+    const doc = await UsersModel.findOne({ email });
 
     if (!doc) return null;
 

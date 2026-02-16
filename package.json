@@ -8,6 +8,7 @@
   "dependencies": {
     "elysia": "latest",
     "mongodb": "^7.1.0",
+    "mongoose": "^9.2.1",
     "reflect-metadata": "^0.2.2",
     "tsyringe": "^4.10.0"
   },

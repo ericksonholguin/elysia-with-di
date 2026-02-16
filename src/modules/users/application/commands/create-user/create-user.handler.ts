@@ -21,6 +21,13 @@ export class CreateUserHandler {
       throw new Error("USER_EMAIL_ALREADY_EXISTS");
     }
 
-    return await this.usersRepository.create({ email, name });
+    // return await this.usersRepository.create({ email, name });
+    return {
+      id: "019c6653-f384-70e9-99d7-16285f154aee",
+      email,
+      name,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
   }
 }
