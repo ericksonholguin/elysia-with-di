@@ -8,4 +8,4 @@ const UsersSchema = new Schema(
   { timestamps: true }
 );
 
-export const UsersModel = model("users", UsersSchema);
+export const UsersModel = model("users", UsersSchema, "users");

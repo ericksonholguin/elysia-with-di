@@ -5,6 +5,7 @@ import type { UsersRepository } from "../../../domain/repositories/users.reposit
 import type { MongooseDatasource } from "../../../../../shared/infrastructure/datasources/mongodb/mongoose.datasource";
 import { TOKENS } from "../../../../../shared/infrastructure/di/tokens";
 import type { User } from "../../../domain/entities/user.entity";
+import { Types } from "mongoose";
 
 @injectable()
 export class MongoUsersRepository implements UsersRepository {
@@ -29,7 +30,9 @@ export class MongoUsersRepository implements UsersRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    const doc = await UsersModel.findById(id);
+    const objectId = new Types.ObjectId(id);
+
+    const doc = await UsersModel.findById(objectId);
 
     if (!doc) return null;
 
