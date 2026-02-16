@@ -1,3 +1,6 @@
+import "reflect-metadata";
 import { bootstrapApp } from "./bootstrap/app.bootstrap";
 
-await bootstrapApp();
+const app = await bootstrapApp();
+
+export default app;
